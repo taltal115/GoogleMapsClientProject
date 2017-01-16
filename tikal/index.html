@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div ng-app="agentsApp" ng-controller="agentsController">
+    <div class="loading">
+       <h1>loading...</h1>
+    </div>
+    <div class="container">
+        <h3>Part 1</h3>
+        <p>The most isolated country is <b>{{winnerCountry}}</b></p>
+
+        <h3>Part 2</h3>
+        <h6>(to sort the fields click the top row field names)</h6>
+        <table>
+            <thead>
+            <tr>
+                <td>
+                    <a href="#" ng-click="sortType = 'agent'; sortReverse = !sortReverse">
+                        Agent ID
+                        <span ng-show="sortType == 'agent' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'agent' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href="#" ng-click="sortType = 'country'; sortReverse = !sortReverse">
+                        Country
+                        <span ng-show="sortType == 'country' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'country' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href="#" ng-click="sortType = 'address'; sortReverse = !sortReverse">
+                        Address
+                        <span ng-show="sortType == 'address' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'address' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href="#" ng-click="sortType = 'date'; sortReverse = !sortReverse">
+                        Date
+                        <span ng-show="sortType == 'date' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'date' && sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat = "item in data | orderBy:sortType:sortReverse" class="{{item.address+','+item.country | removeSpaces}}">
+                <td>{{ item.agent }}</td>
+                <td>{{ item.country }}</td>
+                <td>{{ item.address }}</td>
+                <td>{{ item.date }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td id="count">{{data.length}} missions</td>
+
+            </tr>
+
+            </tbody>
+        </table>
+
+        <h3>Extra effort</h3>
+
+        <div id="right-panel">
+            <div id="inputs">
+
+            </div>
+            <div>
+                <strong>Results</strong>
+            </div>
+            <div id="output"></div>
+        </div>
+        <div id="map"></div>
+        <div class="clear"></div>
+        <h3>Complexity:</h3>
+        <ul>
+            <li>
+                <h5>part 1</h5>
+                <p>O(n) with looping the service data array</p>
+            </li>
+            <li>
+                <h5>part 2</h5>
+                <p>O(n+1) with asynchronous looping google maps computeDistanceBetween service.</p>
+            </li>
+        </ul>
+
+        <h3>Test Cases:</h3>
+        <ul>
+            <li>google service with mock to test all its request and responses and input validation</li>
+            <li>each method seperatly -> covering all line of code</li>
+            <li>angular flow (factory, controller, filter...)</li>
+            <li>html output</li>
+        </ul>
+    </div>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="agents.controller.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUZyo9uiIKGHrliEsJYzu-YPVRmW3DmSE&libraries=geometry"></script>
+
+</html>
